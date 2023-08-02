@@ -37,23 +37,36 @@ export default {
     },
     async recognizePlant() {
       try {
-        const formData = new FormData();
-        formData.append("images", this.imageFile);
-        formData.append("latitude", 49.207);
-        formData.append("longitude", 16.608);
-        formData.append("similar_images", true);
+        if (this.imageFile) {
+          const base64Image = await this.convertImageToBase64(this.imageFile);
 
-        const response = await axios.post(API_ENDPOINT, formData, {
-          headers: {
-            "Api-Key": PLANT_ID_API_KEY,
-            "Content-Type": "application/json",
-          },
-        });
+          const payload = {
+            images: [base64Image],
+            latitude: 49.207,
+            longitude: 16.608,
+            similar_images: true,
+          };
 
-        this.result = response.data;
+          const response = await axios.post(API_ENDPOINT, payload, {
+            headers: {
+              "Api-Key": PLANT_ID_API_KEY,
+              "Content-Type": "application/json",
+            },
+          });
+
+          this.result = response.data;
+        }
       } catch (error) {
         console.error("Error calling Plant.id API:", error);
       }
+    },
+    convertImageToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(",")[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
     },
   },
 };
