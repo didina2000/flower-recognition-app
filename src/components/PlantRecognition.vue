@@ -14,7 +14,10 @@
       <img :src="imagePreviewUrl" alt="Uploaded Plant" class="uploaded-image" />
     </div>
 
-    <result-display :result="result" />
+    <ResultDisplay
+      v-if="result && result.classification"
+      :suggestions="result.classification.suggestions"
+    />
   </div>
 </template>
 
@@ -59,8 +62,7 @@ export default {
               "Content-Type": "application/json",
             },
           });
-
-          this.result = response.data;
+          this.result = response.data.result;
         }
       } catch (error) {
         console.error("Error calling Plant.id API:", error);

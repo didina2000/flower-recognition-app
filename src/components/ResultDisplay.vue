@@ -1,32 +1,17 @@
 <template>
   <div>
     <h2>Flower Recognition Result</h2>
-    <div v-if="result">
-      <div class="flower-info"><strong>Name:</strong> {{ result.name }}</div>
-      <div class="flower-info">
-        <strong>Common Name:</strong>
-        {{ result.common_name || "Not available" }}
-      </div>
-      <div class="flower-info">
-        <strong>Family:</strong> {{ result.family || "Not available" }}
-      </div>
-      <div class="flower-info">
-        <strong>Genus:</strong> {{ result.genus || "Not available" }}
-      </div>
-      <div class="flower-info">
-        <strong>Order:</strong> {{ result.order || "Not available" }}
-      </div>
-      <div class="flower-info">
-        <strong>Family Common Name:</strong>
-        {{ result.family_common_name || "Not available" }}
-      </div>
-      <div class="flower-info">
-        <strong>Scientific Name:</strong>
-        {{ result.scientific_name || "Not available" }}
-      </div>
-      <div class="flower-description">
-        <strong>Description:</strong>
-        {{ result.description || "Not available" }}
+    <div v-if="suggestions.length > 0">
+      <!-- Loop through the suggestions and display their information -->
+      <div v-for="suggestion in suggestions" :key="suggestion.id">
+        <div class="flower-info">
+          <strong>Name:</strong> {{ suggestion.name }}
+        </div>
+        <div class="flower-info">
+          <strong>Probability:</strong> {{ suggestion.probability }}
+        </div>
+        <!-- You can display other information like similar images here -->
+        <!-- ... (add your code for similar images if needed) ... -->
       </div>
     </div>
     <div v-else>
@@ -35,21 +20,11 @@
   </div>
 </template>
 
-<style>
-.flower-info {
-  margin-bottom: 8px;
-}
-
-.flower-description {
-  margin-top: 16px;
-}
-</style>
-
 <script>
 export default {
   props: {
-    result: {
-      type: Object,
+    suggestions: {
+      type: Array,
       required: true,
     },
   },
