@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="upload-container">
-      <label class="upload-btn">
-        Choose File
+      <label class="choose-file-btn">
+        <i class="fas fa-file-upload"></i> Choose File
         <input
           type="file"
           accept="image/*"
@@ -11,8 +11,12 @@
           style="display: none;"
         />
       </label>
-      <button @click="recognizePlant" class="upload-btn">
-        Identify
+      <button
+        @click="recognizePlant"
+        class="choose-file-btn"
+        :disabled="isIdentifyButtonDisabled"
+      >
+        <i class="fas fa-search"></i> Identify
       </button>
     </div>
     <div v-if="imageFile" class="image-container">
@@ -33,7 +37,7 @@
   margin-bottom: 20px;
 }
 
-.upload-btn {
+.choose-file-btn {
   display: inline-block;
   padding: 10px 20px;
   background-color: lavender;
@@ -41,7 +45,7 @@
   border: none;
   cursor: pointer;
   border-radius: 0;
-  width: 100px;
+  width: 150px;
   text-align: center;
   text-decoration: none;
   font-size: 16px;
@@ -50,12 +54,21 @@
   margin-right: 10px;
 }
 
-.upload-btn:focus {
+.choose-file-btn:focus {
   outline: none;
 }
 
-.upload-btn input[type="file"] {
+.choose-file-btn input[type="file"] {
   display: none;
+}
+
+.choose-file-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.icon {
+  margin-right: 5px;
 }
 
 .image-container {
@@ -88,11 +101,19 @@ export default {
       result: null,
     };
   },
+
+  computed: {
+    isIdentifyButtonDisabled() {
+      return !this.imageFile;
+    },
+  },
+
   methods: {
     onFileSelected(event) {
       this.imageFile = event.target.files[0];
       this.imagePreviewUrl = URL.createObjectURL(event.target.files[0]);
     },
+
     async recognizePlant() {
       try {
         if (this.imageFile) {
@@ -117,6 +138,7 @@ export default {
         console.error("Error calling Plant.id API:", error);
       }
     },
+
     convertImageToBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
