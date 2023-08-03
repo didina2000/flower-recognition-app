@@ -35,7 +35,3 @@ Contributions to the Flower Recognition App are welcome! If you find any bugs or
 ## License
 
 The Flower Recognition App is open-source and available under the [MIT License](LICENSE). You are free to use, modify, and distribute the code as per the terms of the license.
-
----
-
-This README.md file provides an overview of the Flower Recognition App, its features, technologies used, setup instructions, and license information. You can further customize the README to include more specific details or instructions as needed.
