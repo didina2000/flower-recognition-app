@@ -1,8 +1,7 @@
-
 <template>
   <div>
     <h1>Flower Recognition App</h1>
-    <PlantRecognition />
+    <PlantRecognition :result="result" @image-deleted="onImageDeleted" />
   </div>
 </template>
 
@@ -12,6 +11,16 @@ import PlantRecognition from "./components/PlantRecognition.vue";
 export default {
   components: {
     PlantRecognition,
+  },
+  data() {
+    return {
+      result: null,
+    };
+  },
+  methods: {
+    onImageDeleted() {
+      this.result = null;
+    },
   },
 };
 </script>

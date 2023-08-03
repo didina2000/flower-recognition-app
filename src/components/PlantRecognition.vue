@@ -22,11 +22,16 @@
     <div v-if="imageFile" class="image-container">
       <h2>Uploaded Plant Photo</h2>
       <img :src="imagePreviewUrl" alt="Uploaded Plant" class="uploaded-image" />
+      <div class="delete-container">
+        <button @click="deleteImage" class="delete-btn">
+          <i class="fas fa-trash"></i> Delete Image
+        </button>
+      </div>
     </div>
 
     <ResultDisplay
-      v-if="result && result.classification"
-      :suggestions="result.classification.suggestions"
+      v-if="localResult && localResult.classification"
+      :suggestions="localResult.classification.suggestions"
     />
   </div>
 </template>
@@ -42,11 +47,16 @@ export default {
   components: {
     ResultDisplay,
   },
+
+  props: {
+    result: Object,
+  },
+
   data() {
     return {
       imageFile: null,
       imagePreviewUrl: null,
-      result: null,
+      localResult: null, // Define a local data property to store the result
     };
   },
 
@@ -60,6 +70,13 @@ export default {
     onFileSelected(event) {
       this.imageFile = event.target.files[0];
       this.imagePreviewUrl = URL.createObjectURL(event.target.files[0]);
+    },
+
+    deleteImage() {
+      this.imageFile = null;
+      this.imagePreviewUrl = null;
+      this.localResult = null; // Reset the localResult when image is deleted
+      this.$emit("image-deleted"); // Emit event to notify the root component that the image is deleted
     },
 
     async recognizePlant() {
@@ -80,7 +97,8 @@ export default {
               "Content-Type": "application/json",
             },
           });
-          this.result = response.data.result;
+          this.localResult = response.data.result; // Store the result in local data property
+          this.$emit("image-deleted");
         }
       } catch (error) {
         console.error("Error calling Plant.id API:", error);

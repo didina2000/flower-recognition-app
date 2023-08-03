@@ -10,7 +10,6 @@
           <strong>Probability:</strong>
           {{ formatProbability(suggestion.probability) }}%
         </div>
-        <!-- Display similar images -->
         <div
           v-if="
             suggestion.similar_images && suggestion.similar_images.length > 0
