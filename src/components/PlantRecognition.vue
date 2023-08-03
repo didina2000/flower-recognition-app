@@ -31,58 +31,6 @@
   </div>
 </template>
 
-<style>
-.upload-container {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.choose-file-btn {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: lavender;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  border-radius: 0;
-  width: 150px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 1;
-  margin-right: 10px;
-}
-
-.choose-file-btn:focus {
-  outline: none;
-}
-
-.choose-file-btn input[type="file"] {
-  display: none;
-}
-
-.choose-file-btn:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.icon {
-  margin-right: 5px;
-}
-
-.image-container {
-  text-align: center;
-}
-
-.uploaded-image {
-  max-width: 300px;
-  max-height: 300px;
-  display: block;
-  margin: 0 auto;
-}
-</style>
-
 <script>
 import axios from "axios";
 import ResultDisplay from "./ResultDisplay.vue";

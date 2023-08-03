@@ -54,20 +54,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.similar-images-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.image-container {
-  margin: 8px;
-}
-
-.similar-image {
-  max-width: 200px;
-  max-height: 200px;
-}
-</style>
