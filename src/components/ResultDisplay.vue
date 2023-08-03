@@ -2,16 +2,35 @@
   <div>
     <h2>Flower Recognition Result</h2>
     <div v-if="suggestions.length > 0">
-      <!-- Loop through the suggestions and display their information -->
       <div v-for="suggestion in suggestions" :key="suggestion.id">
         <div class="flower-info">
           <strong>Name:</strong> {{ suggestion.name }}
         </div>
         <div class="flower-info">
-          <strong>Probability:</strong> {{ suggestion.probability }}
+          <strong>Probability:</strong>
+          {{ formatProbability(suggestion.probability) }}%
         </div>
-        <!-- You can display other information like similar images here -->
-        <!-- ... (add your code for similar images if needed) ... -->
+        <!-- Display similar images -->
+        <div
+          v-if="
+            suggestion.similar_images && suggestion.similar_images.length > 0
+          "
+        >
+          <strong>Similar Images:</strong>
+          <div class="similar-images-container">
+            <div
+              v-for="similarImage in suggestion.similar_images"
+              :key="similarImage.id"
+              class="image-container"
+            >
+              <img
+                :src="similarImage.url"
+                alt="Similar Plant"
+                class="similar-image"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div v-else>
@@ -28,5 +47,27 @@ export default {
       required: true,
     },
   },
+  methods: {
+    formatProbability(probability) {
+      return (probability * 100).toFixed(2);
+    },
+  },
 };
 </script>
+
+<style>
+.similar-images-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.image-container {
+  margin: 8px;
+}
+
+.similar-image {
+  max-width: 200px;
+  max-height: 200px;
+}
+</style>
