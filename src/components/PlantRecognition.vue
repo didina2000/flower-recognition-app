@@ -13,35 +13,33 @@
       <h2>Uploaded Plant Photo</h2>
       <img :src="imagePreviewUrl" alt="Uploaded Plant" class="uploaded-image" />
     </div>
-    <div v-if="result">
-      <h2>Plant Recognition Result</h2>
-      <p><strong>Name:</strong> {{ result.name }}</p>
-      <p>
-        <strong>Common Name:</strong>
-        {{ result.common_name || "Not available" }}
-      </p>
-    </div>
+
+    <result-display :result="result" />
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import ResultDisplay from "./ResultDisplay.vue";
 
 const API_ENDPOINT = "https://plant.id/api/v3/identification";
 const PLANT_ID_API_KEY = "o05RyjwfXOzLBeUpwbsEIsgrgDntZLRxOqVYd1ryjsWM33jqfk";
 
 export default {
+  components: {
+    ResultDisplay,
+  },
   data() {
     return {
       imageFile: null,
-      imagePreviewUrl: null, // To store the image preview URL
+      imagePreviewUrl: null,
       result: null,
     };
   },
   methods: {
     onFileSelected(event) {
       this.imageFile = event.target.files[0];
-      this.imagePreviewUrl = URL.createObjectURL(event.target.files[0]); // Set the image preview URL
+      this.imagePreviewUrl = URL.createObjectURL(event.target.files[0]);
     },
     async recognizePlant() {
       try {
