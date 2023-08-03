@@ -1,13 +1,19 @@
 <template>
   <div>
     <div class="upload-container">
-      <input
-        type="file"
-        accept="image/*"
-        @change="onFileSelected"
-        ref="fileInput"
-      />
-      <button @click="recognizePlant">Recognize Plant</button>
+      <label class="upload-btn">
+        Choose File
+        <input
+          type="file"
+          accept="image/*"
+          @change="onFileSelected"
+          ref="fileInput"
+          style="display: none;"
+        />
+      </label>
+      <button @click="recognizePlant" class="upload-btn">
+        Identify
+      </button>
     </div>
     <div v-if="imageFile" class="image-container">
       <h2>Uploaded Plant Photo</h2>
@@ -20,6 +26,49 @@
     />
   </div>
 </template>
+
+<style>
+.upload-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.upload-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: lavender;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 0;
+  width: 100px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1;
+  margin-right: 10px;
+}
+
+.upload-btn:focus {
+  outline: none;
+}
+
+.upload-btn input[type="file"] {
+  display: none;
+}
+
+.image-container {
+  text-align: center;
+}
+
+.uploaded-image {
+  max-width: 300px;
+  max-height: 300px;
+  display: block;
+  margin: 0 auto;
+}
+</style>
 
 <script>
 import axios from "axios";
@@ -79,21 +128,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.upload-container {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.image-container {
-  text-align: center;
-}
-
-.uploaded-image {
-  max-width: 300px;
-  max-height: 300px;
-  display: block;
-  margin: 0 auto;
-}
-</style>
