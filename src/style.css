@@ -38,6 +38,10 @@ h1 {
   text-align: center;
 }
 
+#app-content {
+  padding-bottom: 60px;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -152,4 +156,25 @@ h1 {
 .similar-image {
   max-width: 200px;
   max-height: 200px;
+}
+
+/* Footer */
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #8c90ea;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+
+  .show-footer {
+    opacity: 1;
+    visibility: visible;
+    bottom: 0;
+  }
 }
