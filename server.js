@@ -15,7 +15,6 @@ app.get("/wikipedia", async (req, res) => {
 
     const response = await axios.get(wikipediaUrl);
 
-    // Assuming you want to send only the 'query' part of the response to the client
     res.json(response.data.query);
   } catch (error) {
     console.error("Error fetching Wikipedia data:", error.message);
