@@ -1,12 +1,18 @@
 <template>
   <div>
-    <input
-      type="file"
-      accept="image/*"
-      @change="onFileSelected"
-      ref="fileInput"
-    />
-    <button @click="recognizePlant">Recognize Plant</button>
+    <div class="upload-container">
+      <input
+        type="file"
+        accept="image/*"
+        @change="onFileSelected"
+        ref="fileInput"
+      />
+      <button @click="recognizePlant">Recognize Plant</button>
+    </div>
+    <div v-if="imageFile" class="image-container">
+      <h2>Uploaded Plant Photo</h2>
+      <img :src="imagePreviewUrl" alt="Uploaded Plant" class="uploaded-image" />
+    </div>
     <div v-if="result">
       <h2>Plant Recognition Result</h2>
       <p><strong>Name:</strong> {{ result.name }}</p>
@@ -28,12 +34,14 @@ export default {
   data() {
     return {
       imageFile: null,
+      imagePreviewUrl: null, // To store the image preview URL
       result: null,
     };
   },
   methods: {
     onFileSelected(event) {
       this.imageFile = event.target.files[0];
+      this.imagePreviewUrl = URL.createObjectURL(event.target.files[0]); // Set the image preview URL
     },
     async recognizePlant() {
       try {
@@ -71,3 +79,21 @@ export default {
   },
 };
 </script>
+
+<style>
+.upload-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.image-container {
+  text-align: center;
+}
+
+.uploaded-image {
+  max-width: 300px;
+  max-height: 300px;
+  display: block;
+  margin: 0 auto;
+}
+</style>

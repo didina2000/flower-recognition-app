@@ -28,7 +28,6 @@
         <strong>Description:</strong>
         {{ result.description || "Not available" }}
       </div>
-      <!-- Add more details about the flower if available -->
     </div>
     <div v-else>
       <p>No flower recognition result available.</p>
