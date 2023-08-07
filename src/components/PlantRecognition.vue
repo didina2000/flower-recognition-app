@@ -33,19 +33,29 @@
       v-if="localResult && localResult.classification"
       :suggestions="localResult.classification.suggestions"
     />
+
+    <div class="footer-container">
+      <AppFooter
+        :show="showFooter"
+        appName="Flower Recognition App"
+        creatorName="Dinuța Vicliuc"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import ResultDisplay from "./ResultDisplay.vue";
+import AppFooter from "./footer/AppFooter.vue"; 
 
 const API_ENDPOINT = "https://plant.id/api/v3/identification";
-const PLANT_ID_API_KEY = "o05RyjwfXOzLBeUpwbsEIsgrgDntZLRxOqVYd1ryjsWM33jqfk";
+const PLANT_ID_API_KEY = "3H1d1ZkSbnVcEdEBz9qLiJCd2d29iTSalC0eHNgpR1FrEWr6wj";
 
 export default {
   components: {
     ResultDisplay,
+    AppFooter,
   },
 
   props: {
@@ -56,7 +66,8 @@ export default {
     return {
       imageFile: null,
       imagePreviewUrl: null,
-      localResult: null, // Define a local data property to store the result
+      localResult: null,
+      showFooter: false,
     };
   },
 
@@ -75,8 +86,9 @@ export default {
     deleteImage() {
       this.imageFile = null;
       this.imagePreviewUrl = null;
-      this.localResult = null; // Reset the localResult when image is deleted
-      this.$emit("image-deleted"); // Emit event to notify the root component that the image is deleted
+      this.localResult = null;
+      this.showFooter = false; 
+      this.$emit("image-deleted");
     },
 
     async recognizePlant() {
@@ -97,7 +109,8 @@ export default {
               "Content-Type": "application/json",
             },
           });
-          this.localResult = response.data.result; // Store the result in local data property
+          this.localResult = response.data.result;
+          this.showFooter = true; 
           this.$emit("image-deleted");
         }
       } catch (error) {

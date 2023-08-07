@@ -4,11 +4,7 @@
       <h1>Flower Recognition App</h1>
       <PlantRecognition :result="result" @image-deleted="onImageDeleted" />
     </div>
-    <AppFooter
-      :show="showFooter"
-      appName="Flower Recognition App"
-      creatorName="Dinuța Vicliuc"
-    />
+    <AppFooter appName="Flower Recognition App" creatorName="Dinuța Vicliuc" />
   </div>
 </template>
 
@@ -24,25 +20,12 @@ export default {
   data() {
     return {
       result: null,
-      showFooter: false,
     };
   },
   methods: {
     onImageDeleted() {
       this.result = null;
     },
-    handleScroll() {
-      const scrollPosition = window.scrollY;
-      const pageHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      this.showFooter = scrollPosition > pageHeight * 0.7;
-    },
-  },
-  mounted() {
-    window.addEventListener("scroll", this.handleScroll);
-  },
-  beforeUnmount() {
-    window.removeEventListener("scroll", this.handleScroll);
   },
 };
 </script>

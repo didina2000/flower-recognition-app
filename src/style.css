@@ -168,13 +168,14 @@ h1 {
   color: #fff;
   padding: 10px;
   text-align: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s, visibility 0.3s;
+}
 
-  .show-footer {
-    opacity: 1;
-    visibility: visible;
-    bottom: 0;
-  }
+.social-icons {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.social-icons a {
+  color: white;
+  margin-right: 20px;
 }
