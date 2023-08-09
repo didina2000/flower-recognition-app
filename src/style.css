@@ -180,3 +180,135 @@ h1 {
   color: white;
   margin-right: 20px;
 }
+
+/* Auth */
+.button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.button-signin {
+  background-color: #8c90ea;
+}
+
+.button-join {
+  background-color: #8c90ea;
+}
+
+.button-signout {
+  background-color: #8c90ea;
+}
+
+.button-space {
+  margin: 0 10px; 
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  text-align: center;
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 200px;
+  margin-bottom: 10px;
+}
+
+.auth-modal {
+  background-color: #f5f5f5;
+}
+
+/* AuthModal */
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  max-width: 500px;
+  text-align: center;
+}
+
+.auth-modal {
+  background-color: white;
+  margin: 40px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.auth-button {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #8c90ea;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1;
+  margin-right: 10px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.auth-button:hover {
+  background-color: #6c70cc;
+}
+
+.auth-button-action {
+  padding: 12px 24px;
+}
+
+.auth-button-toggle {
+  background-color: #e0e0e0;
+  color: #333;
+  font-size: 12px;
+}

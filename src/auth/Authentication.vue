@@ -1,21 +1,23 @@
 <template>
   <div>
-    <button v-if="!user" @click="openSignInModal">Sign In</button>
-    <button v-if="!user" @click="openJoinModal">Join</button>
-    <button v-else @click="signOut">Sign Out</button>
-    <p v-if="user">Welcome, {{ user.displayName }}</p>
+    <div v-if="!user">
+      <button @click="openSignInModal" class="button button-signin">Sign In</button>
+      <span class="button-space"></span>
+      <button @click="openJoinModal" class="button button-join">Join</button>
+    </div>
+    <div v-else>
+      <button @click="signOut" class="button button-signout">Sign Out</button>
+      <p>Welcome, {{ user.displayName }}</p>
+    </div>
 
-    <auth-modal
-      v-if="showModal"
-      :is-sign-in="isSignIn"
-      @close="closeModal"
-    />
+    <AuthModal v-if="showModal" @close="closeModal" :isSignIn="isSignIn" />
+
   </div>
 </template>
 
 <script>
 import { auth } from '../firebase';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import AuthModal from './AuthModal.vue';
 
 export default {
@@ -70,6 +72,12 @@ export default {
         console.error('Sign Out Error:', error);
       }
     },
+
+    toggleAuthMode() {
+      this.isSignIn = !this.isSignIn;
+      this.showModal = true; 
+    },
+
     openSignInModal() {
       this.isSignIn = true;
       this.showModal = true;

@@ -4,7 +4,7 @@
       <PlantRecognition :result="result" @image-deleted="onImageDeleted" />
       <Authentication />
     </div>
-    <AppFooter appName="Flower Recognition App" creatorName="Dinuța Vicliuc" />
+    <AppFooter appName="Flower Recognition App" creatorName="Dinuța Vicliuc" :show="true"/>
 </template>
 
 
