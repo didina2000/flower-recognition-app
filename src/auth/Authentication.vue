@@ -24,6 +24,7 @@ export default {
   components: {
     AuthModal,
   },
+
   data() {
     return {
       user: null,

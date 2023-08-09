@@ -1,7 +1,7 @@
 <template>
     <div class="modal">
       <div class="modal-content auth-modal">
-        <h2>{{ isSignIn ? 'Sign In' : 'Join' }}</h2>
+        <h2>{{ isSignIn ? 'Sign In' : 'Create an Account' }}</h2>
         <form @submit.prevent="handleSubmit">
           <div class="form-group">
             <label for="email">Email:</label>
