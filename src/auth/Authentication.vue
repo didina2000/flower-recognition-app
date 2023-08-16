@@ -3,11 +3,13 @@
     <div v-if="!user">
       <button @click="openSignInModal" class="button button-signin">Sign In</button>
       <span class="button-space"></span>
-      <button @click="openJoinModal" class="button button-join">Join</button>
+      <button @click="openJoinModal" class="button button-join">Sign up</button>
     </div>
     <div v-else>
-      <button @click="signOut" class="button button-signout">Sign Out</button>
-      <p>Welcome, {{ user.displayName }}</p>
+      <div class="user-info">
+        <p class="welcome-message" v-if="user">{{ welcomeMessage }}</p>
+        <button @click="signOut" class="button button-signout">Sign Out</button>
+      </div>
     </div>
 
     <AuthModal v-if="showModal" @close="closeModal" :isSignIn="isSignIn" />
@@ -24,7 +26,6 @@ export default {
   components: {
     AuthModal,
   },
-
   data() {
     return {
       user: null,
@@ -32,22 +33,31 @@ export default {
       isSignIn: true,
     };
   },
+  computed: {
+    welcomeMessage() {
+      return `Welcome, ${this.user.displayName || this.user.email}`;
+    },
+  },
   methods: {
     async initUser() {
       try {
         const user = auth.currentUser;
         this.user = user;
+
+        if (this.user) {
+          localStorage.setItem('authenticated', 'true');
+        } else {
+          localStorage.removeItem('authenticated');
+        }
       } catch (error) {
         console.error('Error initializing user:', error);
       }
     },
     async signIn() {
       try {
-        const email = 'testuser@example.com';
-        const password = 'testpassword';
-
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const userCredential = await signInWithEmailAndPassword(auth, this.email, this.password);
         this.user = userCredential.user;
+        this.initUser(); 
         this.closeModal();
       } catch (error) {
         console.error('Sign In Error:', error);
@@ -55,11 +65,11 @@ export default {
     },
     async join() {
       try {
-        const email = 'newuser@example.com';
-        const password = 'newpassword';
-
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.password);
         this.user = userCredential.user;
+        this.email = '';
+        this.password = '';
+        this.initUser(); 
         this.closeModal();
       } catch (error) {
         console.error('Join Error:', error);
@@ -73,12 +83,10 @@ export default {
         console.error('Sign Out Error:', error);
       }
     },
-
     toggleAuthMode() {
       this.isSignIn = !this.isSignIn;
       this.showModal = true; 
     },
-
     openSignInModal() {
       this.isSignIn = true;
       this.showModal = true;
@@ -93,6 +101,10 @@ export default {
   },
   mounted() {
     this.initUser();
+
+    if (localStorage.getItem('authenticated')) {
+      this.user = auth.currentUser;
+    }
   },
 };
 </script>

@@ -28,6 +28,10 @@ h1 {
   line-height: 1.1;
 }
 
+h2 {
+  color: #0c0c0c;
+}
+
 .card {
   padding: 2em;
 }
@@ -225,6 +229,21 @@ h1 {
 
 .button:hover {
   color: #0c0c0c;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.welcome-message {
+  color: white;
+  margin-right: 10px;
+}
+
+.button-signout {
+  background-color: #8c90ea;
+  color: white;
 }
 
 /* AuthModal */

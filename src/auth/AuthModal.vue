@@ -14,12 +14,12 @@
           </div>
   
           <div class="button-container">
-            <button class="auth-button auth-button-action" type="submit">{{ isSignIn ? 'Sign In' : 'Join' }}</button>
+            <button class="auth-button auth-button-action" type="submit">{{ isSignIn ? 'Sign In' : 'Sign up' }}</button>
           </div>
         </form>
         <div class="button-container">
           <button @click="toggleMode" class="auth-button auth-button-toggle">
-            {{ isSignIn ? 'Join' : 'Sign In' }}
+            {{ isSignIn ? 'Close' : 'Close' }}
           </button>
         </div>
       </div>
