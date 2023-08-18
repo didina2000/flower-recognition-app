@@ -53,36 +53,39 @@ export default {
         console.error('Error initializing user:', error);
       }
     },
-    async signIn() {
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth, this.email, this.password);
-        this.user = userCredential.user;
-        this.initUser(); 
-        this.closeModal();
-      } catch (error) {
-        console.error('Sign In Error:', error);
-      }
-    },
-    async join() {
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.password);
-        this.user = userCredential.user;
-        this.email = '';
-        this.password = '';
-        this.initUser(); 
-        this.closeModal();
-      } catch (error) {
-        console.error('Join Error:', error);
-      }
-    },
-    async signOut() {
-      try {
-        await signOut(auth);
-        this.user = null;
-      } catch (error) {
-        console.error('Sign Out Error:', error);
-      }
-    },
+    methods: {
+  async signIn() {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, this.email, this.password);
+      this.user = userCredential.user;
+      this.saveLatestResults(); 
+      this.closeModal();
+    } catch (error) {
+      console.error('Sign In Error:', error);
+    }
+  },
+  async join() {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.password);
+      this.user = userCredential.user;
+      this.email = '';
+      this.password = '';
+      this.saveLatestResults(); 
+      this.closeModal();
+    } catch (error) {
+      console.error('Join Error:', error);
+    }
+  },
+  async saveLatestResults() {
+    if (this.user) {
+      const latestResultsRef = firestore.collection('latestResults').doc(this.user.uid);
+      await latestResultsRef.set({
+        results: this.latestResults,
+      });
+    }
+  },
+},
+    
     toggleAuthMode() {
       this.isSignIn = !this.isSignIn;
       this.showModal = true; 

@@ -19,6 +19,7 @@
         <i class="fas fa-search"></i> Identify
       </button>
     </div>
+    <button @click="showLatestResults" class="show-latest-results-button">Show Latest Results</button>
     <div v-if="imageFile" class="image-container">
       <h2>Uploaded Plant Photo</h2>
       <img :src="imagePreviewUrl" alt="Uploaded Plant" class="uploaded-image" />
@@ -68,6 +69,7 @@ export default {
       imagePreviewUrl: null,
       localResult: null,
       showFooter: false,
+      showResults: false,
     };
   },
 
@@ -116,6 +118,16 @@ export default {
       } catch (error) {
         console.error("Error calling Plant.id API:", error);
       }
+      if (this.user) {
+      const latestResultsRef = firestore.collection('latestResults').doc(this.user.uid);
+      await latestResultsRef.set({
+        results: this.suggestions,
+      });
+    }
+    },
+
+    showLatestResults() {
+      this.showResults = true;
     },
 
     convertImageToBase64(file) {
