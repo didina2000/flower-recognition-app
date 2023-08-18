@@ -1,5 +1,7 @@
 <template>
   <div>
+    <button @click="showLatestResults" class="show-latest-results-button">Show Latest Results</button>
+    <LatestResults v-if="showResults" :latestResults="latestResults" />
     <div class="upload-container">
       <label class="choose-file-btn">
         <i class="fas fa-file-upload"></i> Choose File
@@ -19,7 +21,6 @@
         <i class="fas fa-search"></i> Identify
       </button>
     </div>
-    <button @click="showLatestResults" class="show-latest-results-button">Show Latest Results</button>
     <div v-if="imageFile" class="image-container">
       <h2>Uploaded Plant Photo</h2>
       <img :src="imagePreviewUrl" alt="Uploaded Plant" class="uploaded-image" />
@@ -29,12 +30,10 @@
         </button>
       </div>
     </div>
-    <LatestResults v-if="showResults" :latestResults="latestResults" />
     <ResultDisplay
       v-if="localResult && localResult.classification"
       :suggestions="localResult.classification.suggestions"
     />
-
     <div class="footer-container">
       <AppFooter
         :show="showFooter"
@@ -50,6 +49,9 @@ import axios from "axios";
 import ResultDisplay from "./ResultDisplay.vue";
 import AppFooter from "./footer/AppFooter.vue"; 
 import LatestResults from "./LatestResults.vue"
+import { auth } from "../firebase";
+import firestore from "../firestore"; 
+
 
 const API_ENDPOINT = "https://plant.id/api/v3/identification";
 const PLANT_ID_API_KEY = "3H1d1ZkSbnVcEdEBz9qLiJCd2d29iTSalC0eHNgpR1FrEWr6wj";
@@ -73,6 +75,7 @@ export default {
       showFooter: false,
       showResults: false,
       latestResults: [],
+      user: null,
     };
   },
 
@@ -114,6 +117,7 @@ export default {
               "Content-Type": "application/json",
             },
           });
+
           this.localResult = response.data.result;
           this.showFooter = true; 
           this.$emit("image-deleted");
@@ -130,8 +134,19 @@ export default {
     },
 
     showLatestResults() {
-      this.showResults = !this.showResults;
-    },
+  const user = auth.currentUser; 
+  if (user) {
+    const latestResultsRef = firestore.collection('latestResults').doc(user.uid);
+    latestResultsRef.get().then((snapshot) => {
+      if (snapshot.exists) {
+        this.latestResults = snapshot.data().results || [];
+        this.showResults = true; 
+      }
+    }).catch((error) => {
+      console.error("Error getting latest results:", error);
+    });
+  }
+},
 
     convertImageToBase64(file) {
       return new Promise((resolve, reject) => {
