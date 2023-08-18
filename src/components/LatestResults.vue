@@ -1,5 +1,6 @@
 <template>
     <div>
+      <h2>Latest Search Results</h2>
       <ul>
         <li v-for="(result, index) in latestResults" :key="index">
           <strong>Search {{ index + 1 }}:</strong> {{ result.name }} (Probability: {{ formatProbability(result.probability) }}%)
@@ -9,7 +10,6 @@
   </template>
   
   <script>
-  import { ref } from 'vue.';
   
   export default {
     props: {

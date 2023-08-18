@@ -29,7 +29,7 @@
         </button>
       </div>
     </div>
-
+    <LatestResults v-if="showResults" :latestResults="latestResults" />
     <ResultDisplay
       v-if="localResult && localResult.classification"
       :suggestions="localResult.classification.suggestions"
@@ -49,6 +49,7 @@
 import axios from "axios";
 import ResultDisplay from "./ResultDisplay.vue";
 import AppFooter from "./footer/AppFooter.vue"; 
+import LatestResults from "./LatestResults.vue"
 
 const API_ENDPOINT = "https://plant.id/api/v3/identification";
 const PLANT_ID_API_KEY = "3H1d1ZkSbnVcEdEBz9qLiJCd2d29iTSalC0eHNgpR1FrEWr6wj";
@@ -57,6 +58,7 @@ export default {
   components: {
     ResultDisplay,
     AppFooter,
+    LatestResults
   },
 
   props: {
@@ -70,6 +72,7 @@ export default {
       localResult: null,
       showFooter: false,
       showResults: false,
+      latestResults: [],
     };
   },
 
@@ -127,7 +130,7 @@ export default {
     },
 
     showLatestResults() {
-      this.showResults = true;
+      this.showResults = !this.showResults;
     },
 
     convertImageToBase64(file) {
